@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+    <html>
+	    <head>
+	    	<title>Assignment 1</title>
+	    </head>		
+    	<h2 ALIGN="CENTER">Assignment 1</h2>		
+	    <form action="results.html" method="get">
+    	    <table border="0" align="left">
+    	        <tbody>
+                    <tr id="results"></tr>		
+                    <a href="/" Back to Form></a>	
+                    <script>
+                        const resultslist = document.getElementById('results')
+                        new URLSearchParams(window.location.search).forEach((value,
+                        name) => {
+                            resultslist.append(`${name}: ${value}`)
+                            resultslist.append(document.createElement('br'))
+                        })
+                    </script>
+    	        </tbody>
+    	    </table>
+    	</form>
+    </html>
+</DOCTYPE>
