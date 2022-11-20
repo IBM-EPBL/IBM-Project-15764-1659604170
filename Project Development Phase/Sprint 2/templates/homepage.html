@@ -1,15 +1,16 @@
 
-<html lang="en">
-    
     <head>
-        <title> SFRA </title>
+        <title> FASHIONS </title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+        
     </head>
     <style>
         *{
     margin: 0;
     padding: 0;
     font-family:"Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    
 
 }
 .main{
@@ -100,7 +101,7 @@ ul li a:hover{
 .btn{
     width: 100px;
     height: 40px;
-    background:transparent;
+    background:transparent ;
     border: 2px solid rgb(98, 246, 152);
     margin-top: 13px;
     color: #ffff;
@@ -137,9 +138,20 @@ ul li a:hover{
     
     font-size: 50px;
     padding-left: 20px;
+    margin-top: 1%;
+    letter-spacing: 2px;
+    color: black;
+}
+.content h5{
+    
+    font-size: 50px;
+    padding-left: 10px;
     margin-top: 9%;
     letter-spacing: 2px;
+    color: black;
 }
+
+
 
 .content .cn{
     width: 160px;
@@ -165,7 +177,7 @@ ul li a:hover{
 }
 
 .content span{
-    color:rgb(98, 246, 152);
+    color:red;
     font-size: 60px;
 }
 
@@ -184,7 +196,7 @@ ul li a:hover{
     width: 220px;
     
     text-align: center;
-    color:rgb(98, 246, 152);
+    color:green;
     font-size: 22px;
    
     border-radius: 10px;
@@ -222,12 +234,16 @@ ul li a:hover{
     
 }
 
-.btnn{
+.reg{
+    position:fixed;
+  
     width: 240px;
     height: 40px;
-    background: rgb(34, 235, 107);
+    background: rgb(98, 246, 152);
     border: none;
-    margin-top: 30px;
+    margin-top:15px;
+    margin-left:20px;
+    border-radius:10px;
     font-size: 18px;
     border-radius: 10px;
     cursor: pointer;
@@ -237,7 +253,7 @@ ul li a:hover{
 
 .btnn:hover{
     background: #fff;
-    color: rgb(202, 98, 246);
+    color: rgb(98, 246, 152);
 }
 
 .btnn a{
@@ -263,9 +279,30 @@ ul li a:hover{
     padding-bottom: 10px;
     text-align: center;
 }
-body{
+.reg{
+    color: white;
+        background-color: #1c1c1e;
+        border: none;
+        outline: none;
+        border-radius: 2px;
+        font-size: 14px;
+        padding: 5px 12px;
+        font-weight: 500;
+}
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 30px;
+    z-index: 999;
+    position: sticky;
+    top: 0;
+    left: 0;
+    
+  }
+ body{
     background-color:pink;
-    background-image: url("https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8b25saW5lJTIwc2hvcHBpbmd8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
+    background-image: url("https://t4.ftcdn.net/jpg/03/09/86/97/360_F_309869755_IquCHHxF7YABo2odctUGEjMrgVDSM8qV.jpg");
     height: 90vh;
     width: 100%;
     background-size: cover;
@@ -274,52 +311,39 @@ body{
 
     </style>
     <body>
-   
+       <section id="header">
         <div class="main">
             <div class="navbar">
                 <div class="icon">
-                    <h2 class="logo">MSB FASHIONS</h2>
+                    <h2 class="logo">FASHOINS</h2>
                 </div>
-
+                
                 <div class="menu">
                     <ul>
-                        
+                        <li><a href="/">HOME</a></li>
                         <li><a href="/admin">ADMIN</a></li>
-                    
-                        
+                
+                       
+                     
                      
                     </ul>
                 </div>
-
+                
                 <div class="search">
                     <input class="srch" type="search" name="" placeholder="Type to search">
-                    <a href="#"><button class="btn">Search</button></a>
+                    <a href="/registertemp"><button class="btn">Search</button></a>
+                    <a href="/index"><button class="reg" type='submit'>LOGIN</button></a> 
                 </div>
 
             </div>
-            
+        </section>
             <div class="content">
-                <h1>Smart Fashion <br><span>Application</span></h1>
+                <h5 class="leo">Welcome To </h5>
+                <h1> Smart Fashion <br><span>Up to 50% offer</span></h1>
                 
-                    <div class="form">
-                        <form action="{{ url_for('register') }}" method="post">
-                            <div class="msg">{{ msg }}</div>
-                        <h2>SMART REGISTER</h2>
-                        
-                        <input id="username" name="username" type="text" placeholder="Enter Your Username" class="textbox"/><br>
-                        <input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/><br>
-                        <input id="email" name="email" type="text" placeholder="Enter Your Email ID" class="textbox"/><br>
-                
-                        <a href="/reg"><button type="submit" class="btnn">REGISTER</button></a>
-
-                        <p class="link">Already have an account<br>
-                        <a href="/index">Log in</a> here</a></p>
-                        </form>
-
-                        
-                    </div>
-            </div>
+                      
+           
         </div>
-       
+        
     </body>
 </html>
