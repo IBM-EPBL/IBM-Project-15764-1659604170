@@ -1,1 +1,14 @@
-
+body{
+    background-color: pink;
+    align-items: center;
+}
+.option{
+    font-size: 50px;
+    align-items: center;
+    background-color: pink;
+}
+li{
+    font-size: 50%;
+    align-items: center;
+    background-color: pink;
+}
