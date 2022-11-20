@@ -3,7 +3,7 @@ import ibm_db
 import re
 
 
-app = Flask(__name__)
+app = Flask(_name_)
 app.secret_key = 'a'
 conn = ibm_db.connect("DATABASE=bludb;HOSTNAME=55fbc997-9266-4331-afd3-888b05e734c0.bs2io90l08kqb1od8lcg.databases.appdomain.cloud;PORT=31929;Security=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=qjp14993;PWD=kIfq04NKDM3zUnCd;",'','')
 
@@ -21,7 +21,7 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        stmt = ibm_db.prepare(conn,'SELECT * FROM users WHERE username = ? AND password = ?')
+        stmt = ibm_db.prepare(conn,'SELECT * FROM login WHERE username = ? AND password = ?')
         ibm_db.bind_param(stmt,1,username)
         ibm_db.bind_param(stmt,2,password)
         ibm_db.execute(stmt)
@@ -39,7 +39,7 @@ def login():
 def profile():
     if 'username' in session:
         uid = session['username']
-        stmt = ibm_db.prepare(conn, 'SELECT * FROM users WHERE username = ?')
+        stmt = ibm_db.prepare(conn, 'SELECT * FROM login WHERE username = ?')
         ibm_db.bind_param(stmt, 1, uid)    
         ibm_db.execute(stmt)
         acc = ibm_db.fetch_tuple(stmt)        
@@ -58,7 +58,7 @@ def editprofile():
             uid = session['username']
             username = request.form['username']
             email = request.form['email']
-            stmt = ibm_db.prepare(conn,"UPDATE users SET username = ?, email = ? WHERE username = ?")
+            stmt = ibm_db.prepare(conn,"UPDATE register SET username = ?, email = ? WHERE username = ?")
             ibm_db.bind_param(stmt, 1, username)
             ibm_db.bind_param(stmt, 2, email)
             ibm_db.bind_param(stmt, 3, uid)
@@ -81,7 +81,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        stmt = ibm_db.prepare(conn,'SELECT * FROM users WHERE username = ?')
+        stmt = ibm_db.prepare(conn,'SELECT * FROM register WHERE username = ?')
         ibm_db.bind_param(stmt,1,username)
         ibm_db.execute(stmt)
         account = ibm_db.fetch_assoc(stmt)
@@ -94,7 +94,7 @@ def register():
         elif not username or not password or not email:
             msg = 'Please fill out the form !'
         else:
-            prep_stmt = ibm_db.prepare(conn,"INSERT INTO users VALUES(?, ?, ?)")
+            prep_stmt = ibm_db.prepare(conn,"INSERT INTO register VALUES(?, ?, ?)")
             ibm_db.bind_param(prep_stmt, 1, username)
             ibm_db.bind_param(prep_stmt, 2, email)
             ibm_db.bind_param(prep_stmt, 3, password)
@@ -198,6 +198,6 @@ def homepage():
 def add():
     return render_template('add.html')
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.debug = True
     app.run(host='0.0.0.0',port=8080)
