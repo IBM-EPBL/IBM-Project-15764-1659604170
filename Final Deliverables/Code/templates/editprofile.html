@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile Card </title>
+    <link rel="stylesheet" href="/static/profilestyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script>
+      window.watsonAssistantChatOptions = {
+        integrationID: "aaaf7abf-17ba-428c-9a28-5efeac60506d", // The ID of this integration.
+        region: "au-syd", // The region your integration is hosted in.
+        serviceInstanceID: "76aac77a-9dd4-4f60-b169-6fecece3d4b1", // The ID of your service instance.
+        onLoad: function(instance) { instance.render(); }
+      };
+      setTimeout(function(){
+        const t=document.createElement('script');
+        t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+        document.head.appendChild(t);
+      });
+    </script>
+</head>
+<body>
+    <link rel="stylesheet" href="/static/profile.css">
+    <div class="navigation">
+        <div class="toggle"></div>
+          <ul>
+              <li><a href="/home1">
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                  <span class="title">Home</span>
+                </a></li>
+              <li><a href="/profile">
+                <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+                  <span class="title">Profile</span>
+              </a></li>
+              
+              
+              <li><a href="/homepage">
+                <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                  <span class="title">logout</span>
+              </a></li>
+          </ul>
+      </div>
+      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <script>
+          let navigation = document.querySelector('.navigation');
+          let toggle = document.querySelector('.toggle');
+          toggle.onclick = function(){
+            navigation.classList.toggle('active')
+          }
+        </script>
+    
+  <div class="wrapper">
+    <form action="{{url_for('editprofile')}}" method="post" >
+     <div class="buttons"><br><center>
+        <p>Username :</p><div class="form-row"><input type="text" id="username" name="username" placeholder="username"></div><br>
+        <p>Email : </p><div class="form-row"><input type="email" id="email" name="email" placeholder="email"></div><br>
+     
+        <center><span>{{a}}</span></center>
+      
+        <button class="button-85" role="button">Save profile</button>
+    </center>
+    </div>
+  </form>
+    
+    </div>
+  </div>
+</body>
+</html>
