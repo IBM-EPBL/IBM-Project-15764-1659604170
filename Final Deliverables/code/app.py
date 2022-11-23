@@ -1,9 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import ibm_db
 import re
+from flask_mail import Mail, Message
 
 
-app = Flask(_name_)
+
+app = Flask(__name__,template_folder="templates")
+mail = Mail(app) # instantiate the mail class
+
+# configuration of mail
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'smartfashionibm@gmail.com'
+app.config['MAIL_PASSWORD'] = 'hi hello welcome'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 app.secret_key = 'a'
 conn = ibm_db.connect("DATABASE=bludb;HOSTNAME=55fbc997-9266-4331-afd3-888b05e734c0.bs2io90l08kqb1od8lcg.databases.appdomain.cloud;PORT=31929;Security=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=qjp14993;PWD=kIfq04NKDM3zUnCd;",'','')
 
@@ -21,7 +33,7 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        stmt = ibm_db.prepare(conn,'SELECT * FROM login WHERE username = ? AND password = ?')
+        stmt = ibm_db.prepare(conn,'SELECT * FROM register WHERE username = ? AND password = ?')
         ibm_db.bind_param(stmt,1,username)
         ibm_db.bind_param(stmt,2,password)
         ibm_db.execute(stmt)
@@ -39,7 +51,7 @@ def login():
 def profile():
     if 'username' in session:
         uid = session['username']
-        stmt = ibm_db.prepare(conn, 'SELECT * FROM login WHERE username = ?')
+        stmt = ibm_db.prepare(conn, 'SELECT * FROM register WHERE username = ?')
         ibm_db.bind_param(stmt, 1, uid)    
         ibm_db.execute(stmt)
         acc = ibm_db.fetch_tuple(stmt)        
@@ -99,10 +111,46 @@ def register():
             ibm_db.bind_param(prep_stmt, 2, email)
             ibm_db.bind_param(prep_stmt, 3, password)
             ibm_db.execute(prep_stmt)
-            msg = 'You have successfully registered !'
+            return render_template('email.html')
+            
+        msg = 'You have successfully registered !'
+           
     elif request.method == 'POST':
         msg = 'Please fill out the form !'
     return render_template('reg.html', msg = msg)
+
+
+@app.route('/email', methods=['GET', 'POST'])
+def email():
+    if request.method == 'POST':
+        email1 = request.form['email1'] 
+        sql = "SELECT * FROM email WHERE email = ? "
+        stmt = ibm_db.prepare(conn,sql)
+        ibm_db.bind_param(stmt,1,email1)
+        ibm_db.execute(stmt)
+        account = ibm_db.fetch_tuple(stmt)
+        print(account)
+        if account:
+            msg = 'Account already exists !'
+        else:
+           insert_sql = "INSERT INTO email(email) VALUES(?)"
+           stmt = ibm_db.prepare(conn,insert_sql)
+           ibm_db.bind_param(stmt, 1, email1)
+           ibm_db.execute(stmt)
+           msg = Message('SMART FASHION RECOMMENDER',sender ='smartfashionibm@gmail.com',recipients = [email1])
+           msg.body = 'Hello user,THIS IS YOUR ONE TIME PASSWORD'
+           msg.body = 'hello user!'
+           msg.body = ' sucessfully registed'
+           msg.body = ' welcome to smart fashion recommender'
+           mail.send(msg)
+           
+        return render_template('index.html')
+     
+            
+    return render_template('index.html') 
+
+
+
 
 @app.route('/admin')
 def admin():
@@ -198,6 +246,6 @@ def homepage():
 def add():
     return render_template('add.html')
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.debug = True
-    app.run(host='0.0.0.0',port=8080)
+    app.run(host='0.0.0.0')
